@@ -14,7 +14,7 @@ run_worker_first = ["/api/*"]
 [[d1_databases]]
 binding = "DB"
 database_name = "nexus-db"
-database_id = "REPLACE_WITH_YOUR_DATABASE_ID"
+database_id = "ce2fc77e-0943-43e5-8933-be24e246add0"
 
 [observability]
 enabled = true
