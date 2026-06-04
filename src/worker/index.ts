@@ -67,5 +67,3 @@ app.get('/api/debug', (c) => {
 });
 
 export default app;
-
-export default app;
