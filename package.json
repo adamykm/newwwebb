@@ -1,0 +1,37 @@
+{
+  "name": "nexus-hub",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:worker\"",
+    "dev:client": "vite",
+    "dev:worker": "wrangler dev src/worker/index.ts --local --persist",
+    "build": "vite build",
+    "deploy": "npm run build && wrangler deploy",
+    "db:migrate:local": "wrangler d1 execute nexus-db --local --file=./migrations/0001_initial.sql && wrangler d1 execute nexus-db --local --file=./migrations/0002_discord_features.sql && wrangler d1 execute nexus-db --local --file=./migrations/0003_nexus_features.sql && wrangler d1 execute nexus-db --local --file=./migrations/0004_platform_moderation.sql",
+    "db:migrate:remote": "wrangler d1 execute nexus-db --remote --file=./migrations/0001_initial.sql && wrangler d1 execute nexus-db --remote --file=./migrations/0002_discord_features.sql && wrangler d1 execute nexus-db --remote --file=./migrations/0003_nexus_features.sql && wrangler d1 execute nexus-db --remote --file=./migrations/0004_platform_moderation.sql",
+    "db:migrate:remote:2": "wrangler d1 execute nexus-db --remote --file=./migrations/0002_discord_features.sql",
+    "db:migrate:remote:3": "wrangler d1 execute nexus-db --remote --file=./migrations/0003_nexus_features.sql",
+    "db:migrate:remote:4": "wrangler d1 execute nexus-db --remote --file=./migrations/0004_platform_moderation.sql",
+    "db:migrate:remote:5": "wrangler d1 execute nexus-db --remote --file=./migrations/0005_set_owner.sql",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.7.4",
+    "jose": "^6.0.10",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.4.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250317.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.1",
+    "wrangler": "^4.4.0"
+  }
+}
