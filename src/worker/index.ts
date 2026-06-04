@@ -12,14 +12,16 @@ type Variables = { session: SessionPayload; userId: string };
 
 const app = new Hono<{ Bindings: Env; Variables: Variables }>();
 
-// ✅ DEBUG ROUTE (temporary)
+// ✅ DEBUG ROUTE
 app.get('/api/debug', (c) => {
   return c.json({
+    ok: true,
     db: typeof c.env.DB,
     hasDB: !!c.env.DB
   });
 });
 
+// CORS
 app.use('/api/*', async (c, next) => {
   c.header('Access-Control-Allow-Origin', c.req.header('Origin') || '*');
   c.header('Access-Control-Allow-Credentials', 'true');
@@ -31,6 +33,7 @@ app.use('/api/*', async (c, next) => {
   await next();
 });
 
+// ROUTES
 app.route('/api/auth', authRoutes);
 
 const protectedApi = new Hono<{ Bindings: Env; Variables: Variables }>();
@@ -54,16 +57,9 @@ protectedApi.route('/admin', adminRoutes);
 
 app.route('/api', protectedApi);
 
+// fallback
 app.all('*', async (c) => {
   return c.env.ASSETS.fetch(c.req.raw);
-});
-
-import { Hono } from 'hono';
-
-const app = new Hono();
-
-app.get('/api/debug', (c) => {
-  return c.json({ ok: true });
 });
 
 export default app;
