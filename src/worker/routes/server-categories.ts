@@ -9,10 +9,7 @@ serverCategories.post('/', async (c) => {
   const session = c.get('session');
   if (session?.role !== 'admin') return c.json({ error: 'Admin only' }, 403);
 
-  const { name, description } = await c.req.json<{
-    name: string;
-    description?: string;
-  }>();
+  const { name, description } = await c.req.json<{ name: string; description?: string }>();
 
   const categoryId = id();
   await c.env.DB.prepare(
@@ -26,26 +23,18 @@ serverCategories.post('/', async (c) => {
 
 // Get all server categories
 serverCategories.get('/', async (c) => {
-  const categories = await c.env.DB.prepare(
-    'SELECT id, name, description FROM server_categories ORDER BY name'
-  ).all();
-
+  const categories = await c.env.DB.prepare('SELECT id, name, description FROM server_categories ORDER BY name').all();
   return c.json({ categories });
 });
 
 // Add server to category
-serverCategories.post('/add-server', async (c) => {
+serverCategories.post('/add', async (c) => {
   const session = c.get('session');
   if (session?.role !== 'admin') return c.json({ error: 'Admin only' }, 403);
 
-  const { server_id, category_id } = await c.req.json<{
-    server_id: string;
-    category_id: string;
-  }>();
+  const { server_id, category_id } = await c.req.json<{ server_id: string; category_id: string }>();
 
-  await c.env.DB.prepare('UPDATE servers SET category_id = ? WHERE id = ?')
-    .bind(category_id, server_id)
-    .run();
+  await c.env.DB.prepare('UPDATE servers SET category_id = ? WHERE id = ?').bind(category_id, server_id).run();
 
   return c.json({ ok: true });
 });
