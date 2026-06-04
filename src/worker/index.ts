@@ -7,6 +7,15 @@ import notesRoutes from './routes/notes';
 import eventsRoutes from './routes/events';
 import serversRoutes from './routes/servers';
 import adminRoutes from './routes/admin';
+import profileRoutes from './routes/profiles';
+import friendRoutes from './routes/friends';
+import dmRoutes from './routes/dm';
+import voiceRoutes from './routes/voice';
+import moderationRoutes from './routes/moderation';
+import mediaRoutes from './routes/media';
+import giphyRoutes from './routes/giphy';
+import channelCategoriesRoutes from './routes/channel-categories';
+import serverCategoriesRoutes from './routes/server-categories';
 
 type Variables = { session: SessionPayload; userId: string };
 
@@ -49,11 +58,23 @@ protectedApi.use('*', async (c, next) => {
   await next();
 });
 
+// Original routes
 protectedApi.route('/tasks', tasksRoutes);
 protectedApi.route('/notes', notesRoutes);
 protectedApi.route('/events', eventsRoutes);
 protectedApi.route('/servers', serversRoutes);
 protectedApi.route('/admin', adminRoutes);
+
+// New Discord feature routes
+protectedApi.route('/profiles', profileRoutes);
+protectedApi.route('/friends', friendRoutes);
+protectedApi.route('/dm', dmRoutes);
+protectedApi.route('/voice', voiceRoutes);
+protectedApi.route('/moderation', moderationRoutes);
+protectedApi.route('/media', mediaRoutes);
+protectedApi.route('/giphy', giphyRoutes);
+protectedApi.route('/channel-categories', channelCategoriesRoutes);
+protectedApi.route('/server-categories', serverCategoriesRoutes);
 
 app.route('/api', protectedApi);
 
