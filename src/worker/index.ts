@@ -58,4 +58,14 @@ app.all('*', async (c) => {
   return c.env.ASSETS.fetch(c.req.raw);
 });
 
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.get('/api/debug', (c) => {
+  return c.json({ ok: true });
+});
+
+export default app;
+
 export default app;
