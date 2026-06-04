@@ -11,6 +11,11 @@ binding = "STATIC_ASSETS"
 not_found_handling = "single-page-application"
 run_worker_first = ["/api/*"]
 
+[[d1_databases]]
+binding = "DB"
+database_name = "nexus-db"
+database_id = "REPLACE_WITH_YOUR_DATABASE_ID"
+
 [observability]
 enabled = true
 head_sampling_rate = 1
