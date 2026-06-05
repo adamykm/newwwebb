@@ -1,0 +1,17 @@
+name = "newweb"
+main = "src/worker/index.ts"
+compatibility_date = "2025-03-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "dist"
+
+[assets]
+directory = "dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*"]
+
+# D1: bind in Cloudflare Dashboard only (do NOT put database_id here)
+# Pages → Settings → Bindings → D1 → Variable name: DB → database: nexus-db
+#
+# Secrets (Cloudflare Dashboard → Variables and secrets, NOT GitHub):
+#   SESSION_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD
